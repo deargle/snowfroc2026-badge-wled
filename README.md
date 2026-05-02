@@ -115,4 +115,4 @@ GPIO for the picoled on the back is `38`
 | Height        | `7`          |
 | Serpentine    | `off`         |
 | First pixel   | `top-left`   |
-| Orientation   | `horizontal` |
+| Orientation   | `vertical` |
