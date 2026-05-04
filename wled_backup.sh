@@ -36,14 +36,9 @@ case "$CMD" in
         [[ -f "$STATE_FILE" ]] || { echo "File not found: $STATE_FILE"; exit 1; }
         # Post cfg with boot preset set to 1 (numbered presets persist more
         # reliably than the sv:true boot-slot approach).
-        python3 -c "
-import json, sys
-cfg = json.load(open('$CFG_FILE'))
-cfg['def']['ps'] = 1
-print(json.dumps(cfg))
-" | curl -sf -X POST "http://$HOST/json/cfg" \
+        curl -sf -X POST "http://$HOST/json/cfg" \
             -H 'Content-Type: application/json' \
-            -d @- | grep -q '"success":true'
+            -d @"$CFG_FILE" | grep -q '"success":true'
         echo "Restored hardware config from $CFG_FILE"
         # cfg changes can trigger a reboot — wait for WLED to come back before
         # posting state, otherwise the state write is lost.

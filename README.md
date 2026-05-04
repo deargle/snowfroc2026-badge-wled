@@ -76,6 +76,9 @@ To run the skill, clone this repository, and then run the skill like this from w
 ```
 
 
+**Why is this a skill and not just a script**
+
+Invalid question, 404 good reason not found.
 
 
 

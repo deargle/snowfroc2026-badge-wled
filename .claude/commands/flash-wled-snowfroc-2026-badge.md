@@ -209,51 +209,36 @@ After flashing succeeds, tell the user:
 
 ---
 
-## Step 5 — Connect to WLED
+## Step 5 — Connect to WLED and restore configuration
 
 Tell the user:
-> WLED broadcasts a Wi-Fi access point on first boot. Connect from the host OS (not the container) to:
-> - **SSID**: `WLED-AP`
-> - **Password**: `wled1234`
+> WLED has been flashed to the device. It should start up a WiFi access point with **SSID** `WLED-AP` and **password**: `wled1234`
 >
-> Confirm when connected.
+> Connect to this access point. Then, run the following script to configure WLED with `wled_cfg.json` and `wled_state.json`:
+> ```
+> ./wled_backup.sh restore
+> ```
+> For your information, the WLED config is set as follows:
+>
+> **Config → LED Preferences → LED Outputs**
+>
+> | Output | GPIO | Type   | Color Order | Count | Segment |
+> |--------|------|--------|-------------|-------|---------|
+> | LED 1  | 17   | WS281x | GRB         | 126   | 0       |
+> | LED 2  | 38   | WS281x | GRB         | 1     | 1       |
+>
+> **Config → LED Preferences → 2D Configuration**
+>
+> | Setting     | Value      |
+> |-------------|------------|
+> | Panels      | 1          |
+> | Width       | 18         |
+> | Height      | 7          |
+> | Serpentine  | off        |
+> | Orientation | vertical   |
+> | First pixel | top-left   |
 
-After the user confirms, poll until WLED responds:
-
-```bash
-until curl -sf http://4.3.2.1/json/info >/dev/null; do echo "Waiting for WLED..."; sleep 2; done
-echo "WLED is reachable at http://4.3.2.1"
-```
-
----
-
-## Step 6 — Restore configuration
-
-```bash
-until curl -sf http://4.3.2.1/json/info >/dev/null; do echo "Waiting for WLED..."; sleep 2; done
-./wled_backup.sh restore
-```
-
-If `wled_backup.sh` is not present or fails, tell the user to enter these settings manually in the WLED UI:
-
-**Config → LED Preferences → LED Outputs**
-
-| Output | GPIO | Type   | Color Order | Count | Segment |
-|--------|------|--------|-------------|-------|---------|
-| LED 1  | 17   | WS281x | GRB         | 126   | 0       |
-| LED 2  | 38   | WS281x | GRB         | 1     | 1       |
-
-**Config → LED Preferences → 2D Configuration**
-
-| Setting     | Value      |
-|-------------|------------|
-| Panels      | 1          |
-| Width       | 18         |
-| Height      | 7          |
-| Serpentine  | off        |
-| Orientation | vertical   |
-| First pixel | top-left   |
-| Orientation | horizontal |
+The skill is complete. Do not run any further steps.
 
 ---
 
